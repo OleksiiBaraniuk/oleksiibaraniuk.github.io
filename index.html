@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oleksii Baraniuk | Creative Developer & Content Creator</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <style type="text/tailwindcss">
+        :root {
+            --md-sys-color-primary: #B3261E;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #F9DEDC;
+            --md-sys-color-on-primary-container: #410E0B;
+            --md-sys-color-secondary: #775652;
+            --md-sys-color-surface: #FEF7F3;
+            --md-sys-color-surface-variant: #F4DDDB;
+            --md-sys-color-on-surface: #1C1B1B;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-background: #FFFBFE;
+            --md-sys-color-outline: #857372;
+            --md-sys-shape-corner-extra-small: 4px;
+            --md-sys-shape-corner-small: 8px;
+            --md-sys-shape-corner-medium: 12px;
+            --md-sys-shape-corner-large: 16px;
+            --md-sys-shape-corner-extra-large: 28px;
+            --md-sys-shape-corner-full: 1000px;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-surface);
+        }
+        
+        h1, h2, h3, .brand-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .m3-card {
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--md-sys-shape-corner-large);
+            padding: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .m3-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(179, 38, 30, 0.03) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .m3-card:hover::before {
+            opacity: 1;
+        }
+        
+        .m3-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(179, 38, 30, 0.15);
+        }
+        
+        .m3-filled-button {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-radius: var(--md-sys-shape-corner-full);
+            padding: 0.625rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .m3-filled-button:hover {
+            background-color: #c93028;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(179, 38, 30, 0.3);
+        }
+        
+        .m3-outlined-button {
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-primary);
+            background: transparent;
+            border-radius: var(--md-sys-shape-corner-full);
+            padding: 0.625rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .m3-outlined-button:hover {
+            background-color: rgba(179, 38, 30, 0.08);
+            border-color: var(--md-sys-color-primary);
+        }
+        
+        .m3-nav-tab {
+            padding: 1rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface-variant);
+            position: relative;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .m3-nav-tab.active {
+            color: var(--md-sys-color-primary);
+        }
+        
+        .m3-nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background-color: var(--md-sys-color-primary);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .m3-chip {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--md-sys-shape-corner-small);
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+        
+        .m3-chip:hover {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+        
+        .filter-chip {
+            cursor: pointer;
+            border: 1px solid var(--md-sys-color-outline);
+        }
+        
+        .filter-chip.active {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-card {
+            transition: all 0.3s;
+        }
+        
+        .project-card.hidden {
+            display: none;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--md-sys-color-background);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--md-sys-color-surface-variant);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--md-sys-color-outline);
+        }
+        
+        .header-shadow {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .form-field {
+            background-color: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--md-sys-shape-corner-small);
+            padding: 0.875rem;
+            font-size: 0.875rem;
+            width: 100%;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .form-field:focus {
+            outline: none;
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px rgba(179, 38, 30, 0.1);
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--md-sys-shape-corner-medium);
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-surface-variant);
+        }
+        
+        .social-link:hover {
+            background-color: var(--md-sys-color-primary-container);
+            border-color: var(--md-sys-color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .blog-card {
+            cursor: pointer;
+        }
+        
+        .blog-card:hover h3 {
+            color: var(--md-sys-color-primary);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-[var(--md-sys-color-surface)] sticky top-0 z-50 header-shadow">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-10 h-10 bg-[var(--md-sys-color-primary)] flex items-center justify-center rounded-xl shadow-sm">
+                    <span class="material-symbols-outlined text-white text-2xl">terminal</span>
+                </div>
+                <div class="flex flex-col">
+                    <span
+                        class="brand-font font-bold text-xl tracking-tight text-[var(--md-sys-color-on-surface)] leading-none">Oleksii
+                        Baraniuk</span>
+                    <span
+                        class="text-[var(--md-sys-color-on-surface-variant)] font-mono text-[10px] mt-1 tracking-widest uppercase">CREATOR_HUB</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <div
+                    class="hidden lg:flex items-center gap-6 text-xs font-medium text-[var(--md-sys-color-on-surface-variant)]">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        <span>STATUS: <span
+                                class="text-[var(--md-sys-color-primary)] font-bold uppercase">Available</span></span>
+                    </div>
+                    <span class="opacity-60">v1.0.2</span>
+                </div>
+                <button class="m3-filled-button" onclick="window.open('your-cv.pdf', '_blank')">
+                    <span class="material-symbols-outlined text-sm">download</span>
+                    Download CV
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex px-4 overflow-x-auto border-t border-[var(--md-sys-color-surface-variant)]">
+            <button class="m3-nav-tab active" data-section="overview">Overview</button>
+            <button class="m3-nav-tab" data-section="projects">Projects</button>
+            <button class="m3-nav-tab" data-section="blog">Blog & Articles</button>
+            <button class="m3-nav-tab" data-section="contact">Contact</button>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto w-full px-6 py-8">
+        <!-- Overview Section -->
+        <section id="overview" class="section active">
+            <div class="mb-10">
+                <h1 class="text-4xl font-bold tracking-tight mb-3 text-[var(--md-sys-color-on-surface)]">Creator
+                    Dashboard</h1>
+                <p class="text-[var(--md-sys-color-on-surface-variant)] text-lg max-w-3xl leading-relaxed">
+                    Multi-disciplinary creator crafting immersive Unity games, building open-source applications,
+                    creating YouTube content, and authoring digital comics.
+                </p>
+            </div>
+
+            <!-- Featured Content Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Unity Games Highlight -->
+                <div class="m3-card md:col-span-2 flex flex-col">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-[var(--md-sys-color-primary)] w-2 h-2 rounded-full"></span>
+                                <span
+                                    class="text-[10px] font-bold text-[var(--md-sys-color-primary)] uppercase tracking-widest">UNITY
+                                    GAME DEV</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-[var(--md-sys-color-on-surface)]">Featured Game Project
+                            </h2>
+                        </div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-[var(--md-sys-color-primary-container)] flex items-center justify-center text-[var(--md-sys-color-on-primary-container)]">
+                            <span class="material-symbols-outlined">sports_esports</span>
+                        </div>
+                    </div>
+                    <div
+                        class="mb-6 h-64 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 rounded-[var(--md-sys-shape-corner-medium)] overflow-hidden flex items-center justify-center">
+                        <span class="text-white/50 text-6xl material-symbols-outlined">videogame_asset</span>
+                    </div>
+                    <p class="text-sm text-[var(--md-sys-color-on-surface-variant)] mb-8 flex-grow leading-relaxed">
+                        An immersive game experience built with Unity.
+                    </p>
+                    <div class="flex gap-4">
+                        <button class="m3-filled-button" onclick="window.open('your-game-link', '_blank')">View
+                            Project</button>
+                        <button class="m3-outlined-button" onclick="window.open('your-github', '_blank')">Source
+                            Code</button>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Card -->
+                <div class="m3-card flex flex-col">
+                    <div
+                        class="flex items-center gap-4 mb-6 pb-4 border-b border-[var(--md-sys-color-surface-variant)]">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[var(--md-sys-color-primary-container)] flex items-center justify-center text-[var(--md-sys-color-primary)]">
+                            <span class="material-symbols-outlined">code</span>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-base text-[var(--md-sys-color-on-surface)]">Tech Stack</h2>
+                            <p class="text-xs text-[var(--md-sys-color-on-surface-variant)] font-mono">Building &
+                                Learning</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="m3-chip">Unity</span>
+                        <span class="m3-chip">C#</span>
+                        <span class="m3-chip">Kotlin</span>
+                        <span class="m3-chip">Design</span>
+                        <span class="m3-chip">3D</span>
+                    </div>
+                </div>
+
+                <!-- YouTube Card -->
+                <div class="m3-card flex flex-col">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span
+                            class="material-symbols-outlined text-[var(--md-sys-color-primary)] text-sm">play_circle</span>
+                        <span
+                            class="text-[10px] font-bold uppercase tracking-widest text-[var(--md-sys-color-on-surface-variant)]">YouTube
+                            Channel</span>
+                    </div>
+                    <h2 class="font-bold text-lg mb-4 text-[var(--md-sys-color-on-surface)] leading-tight">My Journey
+                    </h2>
+                    <div
+                        class="aspect-video bg-gradient-to-br from-red-500 to-pink-500 rounded-[var(--md-sys-shape-corner-medium)] mb-4 relative group overflow-hidden flex items-center justify-center">
+                        <span class="text-white/70 text-5xl material-symbols-outlined">smart_display</span>
+                    </div>
+                    <div
+                        class="flex items-center justify-between pt-4 mt-auto border-t border-[var(--md-sys-color-surface-variant)]">
+                        <span class="text-xs font-bold text-[var(--md-sys-color-on-surface-variant)]">COMING SOON</span>
+                        <button
+                            class="flex items-center gap-1 text-xs font-bold text-[var(--md-sys-color-primary)] hover:text-[var(--md-sys-color-on-surface)] transition-colors group"
+                            onclick="window.open('your-youtube-channel', '_blank')">
+                            SUBSCRIBE <span
+                                class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Comics Card -->
+                <div class="m3-card">
+                    <div
+                        class="h-40 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-[var(--md-sys-shape-corner-medium)] mb-5 overflow-hidden flex items-center justify-center">
+                        <span class="text-white/70 text-6xl material-symbols-outlined">auto_stories</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span
+                            class="text-[10px] font-bold text-[var(--md-sys-color-on-surface-variant)] mb-1 uppercase tracking-widest">COMICS
+                            & ART</span>
+                        <h2 class="text-lg font-bold mb-2 text-[var(--md-sys-color-on-surface)]">Original Comic Series
+                        </h2>
+                        <p class="text-xs text-[var(--md-sys-color-on-surface-variant)] mb-5 leading-relaxed">
+                            Creating visual stories that blend art and narrative. Coming soon!
+                        </p>
+                        <button class="m3-outlined-button w-full" onclick="alert('Comic page coming soon!')">
+                            Coming Soon <span class="material-symbols-outlined text-sm">open_in_new</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contact Info Cards -->
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="m3-card flex items-center gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[var(--md-sys-color-primary-container)] flex items-center justify-center text-[var(--md-sys-color-primary)]">
+                            <span class="material-symbols-outlined text-xl">alternate_email</span>
+                        </div>
+                        <div>
+                            <div
+                                class="text-[10px] text-[var(--md-sys-color-on-surface-variant)] uppercase font-bold tracking-widest">
+                                Email</div>
+                            <div class="font-bold text-sm text-[var(--md-sys-color-on-surface)]">
+                                oleksiibaraniuk@proton.me</div>
+                        </div>
+                    </div>
+
+                    <div class="m3-card flex items-center gap-4 bg-[var(--md-sys-color-primary)] !text-white">
+                        <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-2xl">rocket_launch</span>
+                        </div>
+                        <div>
+                            <div class="text-[10px] text-white/70 uppercase font-black tracking-widest">Status</div>
+                            <div class="font-bold text-lg uppercase leading-none">Open to Collaborate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="mb-10">
+                <h1 class="text-4xl font-bold tracking-tight mb-3 text-[var(--md-sys-color-on-surface)]">Project
+                    Portfolio</h1>
+                <p class="text-[var(--md-sys-color-on-surface-variant)] text-lg max-w-3xl leading-relaxed mb-6">
+                    Explore my work across game development, AI applications, and creative projects.
+                </p>
+
+                <!-- Filter Chips -->
+                <div class="flex flex-wrap gap-2 mb-8">
+                    <button class="m3-chip filter-chip active" data-filter="all">All Projects</button>
+                    <button class="m3-chip filter-chip" data-filter="games">Unity Games</button>
+                    <button class="m3-chip filter-chip" data-filter="ai">Apps/Programs</button>
+                    <button class="m3-chip filter-chip" data-filter="comics">Comics & Art</button>
+                    <button class="m3-chip filter-chip" data-filter="other">Other</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+                <!-- Unity Game Project 1 -->
+                <div class="m3-card project-card" data-category="games">
+                    <div
+                        class="h-48 bg-gradient-to-br from-blue-600 to-purple-600 rounded-[var(--md-sys-shape-corner-medium)] mb-4 flex items-center justify-center">
+                        <span class="text-white/60 text-5xl material-symbols-outlined">sports_esports</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="m3-chip">Unity</span>
+                        <span class="m3-chip">C#</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[var(--md-sys-color-on-surface)]">Game Project #1</h3>
+                    <p class="text-sm text-[var(--md-sys-color-on-surface-variant)] mb-4">Blank Description</p>
+                    <div class="flex gap-2">
+                        <button class="m3-outlined-button flex-1" onclick="window.open('your-itch-io-link', '_blank')">
+                            <span class="material-symbols-outlined text-sm">play_arrow</span>
+                            Play
+                        </button>
+                        <button class="m3-outlined-button flex-1" onclick="window.open('your-github', '_blank')">
+                            <span class="material-symbols-outlined text-sm">code</span>
+                            Code
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AI App Project -->
+                <div class="m3-card project-card" data-category="ai">
+                    <div
+                        class="h-48 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-[var(--md-sys-shape-corner-medium)] mb-4 flex items-center justify-center">
+                        <span class="text-white/60 text-5xl material-symbols-outlined">psychology</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="m3-chip">AI/ML</span>
+                        <span class="m3-chip">Python</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[var(--md-sys-color-on-surface)]">Application</h3>
+                    <p class="text-sm text-[var(--md-sys-color-on-surface-variant)] mb-4"> App description</p>
+                    <div class="flex gap-2">
+                        <button class="m3-outlined-button flex-1" onclick="window.open('your-app-link', '_blank')">
+                            <span class="material-symbols-outlined text-sm">open_in_new</span>
+                            Demo
+                        </button>
+                        <button class="m3-outlined-button flex-1" onclick="window.open('your-github', '_blank')">
+                            <span class="material-symbols-outlined text-sm">code</span>
+                            Code
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Comic Project -->
+                <div class="m3-card project-card" data-category="comics">
+                    <div
+                        class="h-48 bg-gradient-to-br from-pink-500 to-rose-600 rounded-[var(--md-sys-shape-corner-medium)] mb-4 flex items-center justify-center">
+                        <span class="text-white/60 text-5xl material-symbols-outlined">brush</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="m3-chip">Digital Art</span>
+                        <span class="m3-chip">Comics</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[var(--md-sys-color-on-surface)]">Comic Series</h3>
+                    <p class="text-sm text-[var(--md-sys-color-on-surface-variant)] mb-4">What's
+                        the story about?</p>
+                    <button class="m3-outlined-button w-full" onclick="alert('Comic page coming soon!')">
+                        <span class="material-symbols-outlined text-sm">auto_stories</span>
+                        Read More
+                    </button>
+                </div>
+
+                <!-- Add more project cards as needed -->
+                <!-- Copy the structure above and modify for your actual projects -->
+            </div>
+
+            <!-- Social Links Section -->
+            <div class="mt-12 p-8 bg-[var(--md-sys-color-surface)] rounded-[var(--md-sys-shape-corner-large)]">
+                <h2 class="text-2xl font-bold mb-6 text-[var(--md-sys-color-on-surface)]">Find Me Online</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="https://github.com/OleksiiBaraniuk" target="_blank" class="social-link">
+                        <span class="material-symbols-outlined">code</span>
+                        <span class="font-medium">GitHub</span>
+                    </a>
+                    <a href="https://www.youtube.com/@OleksiiBaraniuk" target="_blank" class="social-link">
+                        <span class="material-symbols-outlined">play_circle</span>
+                        <span class="font-medium">YouTube</span>
+                    </a>
+                    <a href="https://baraniukconnection.itch.io" target="_blank" class="social-link">
+                        <span class="material-symbols-outlined">videogame_asset</span>
+                        <span class="font-medium">Itch.io</span>
+                    </a>
+                    <a href="#" onclick="alert('Comic page coming soon!'); return false;" class="social-link">
+                        <span class="material-symbols-outlined">auto_stories</span>
+                        <span class="font-medium">Comics (Soon)</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="section">
+            <div class="mb-10">
+                <h1 class="text-4xl font-bold tracking-tight mb-3 text-[var(--md-sys-color-on-surface)]">Blog & Articles
+                </h1>
+                <p class="text-[var(--md-sys-color-on-surface-variant)] text-lg max-w-3xl leading-relaxed">
+                    Thoughts on game development, AI, creative process, and lessons learned.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Blog Post 1 -->
+                <div class="m3-card blog-card">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-xs font-bold text-[var(--md-sys-color-primary)] uppercase">Game Dev</span>
+                        <span class="text-xs text-[var(--md-sys-color-on-surface-variant)]">•</span>
+                        <span class="text-xs text-[var(--md-sys-color-on-surface-variant)]">5 min read</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-[var(--md-sys-color-on-surface)] transition-colors">Getting
+                        Started with Unity</h3>
+                    <p class="text-sm text-[var(--md-sys-color-on-surface-variant)] mb-4 leading-relaxed">
+                        My journey into Unity game development and the first lessons I learned. What I wish I knew when
+                        starting out...
+                    </p>
+                    <div
+                        class="flex items-center justify-between pt-4 border-t border-[var(--md-sys-color-surface-variant)]">
+                        <span class="text-xs text-[var(--md-sys-color-on-surface-variant)]">February 2026</span>
+                        <button class="text-xs font-bold text-[var(--md-sys-color-primary)] flex items-center gap-1">
+                            READ MORE <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="mb-10">
+                <h1 class="text-4xl font-bold tracking-tight mb-3 text-[var(--md-sys-color-on-surface)]">Get In Touch
+                </h1>
+                <p class="text-[var(--md-sys-color-on-surface-variant)] text-lg max-w-3xl leading-relaxed">
+                    Interested in collaborating or have questions? I'd love to hear from you!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Contact Form -->
+                <div class="m3-card">
+                    <h2 class="text-2xl font-bold mb-6 text-[var(--md-sys-color-on-surface)]">Send a Message</h2>
+                    <form id="contactForm" onsubmit="handleSubmit(event)">
+                        <div class="mb-4">
+                            <label
+                                class="block text-sm font-medium mb-2 text-[var(--md-sys-color-on-surface)]">Name</label>
+                            <input type="text" name="name" required class="form-field" placeholder="Your name">
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                class="block text-sm font-medium mb-2 text-[var(--md-sys-color-on-surface)]">Email</label>
+                            <input type="email" name="email" required class="form-field"
+                                placeholder="oleksiibaraiuk@proton.me">
+                        </div>
+                        <div class="mb-4">
+                            <label
+                                class="block text-sm font-medium mb-2 text-[var(--md-sys-color-on-surface)]">Subject</label>
+                            <input type="text" name="subject" required class="form-field"
+                                placeholder="What's this about?">
+                        </div>
+                        <div class="mb-6">
+                            <label
+                                class="block text-sm font-medium mb-2 text-[var(--md-sys-color-on-surface)]">Message</label>
+                            <textarea name="message" required rows="5" class="form-field"
+                                placeholder="Your message..."></textarea>
+                        </div>
+                        <button type="submit" class="m3-filled-button w-full">
+                            <span class="material-symbols-outlined text-sm">send</span>
+                            Send Message
+                        </button>
+                    </form>
+                    <div id="formSuccess"
+                        class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-[var(--md-sys-shape-corner-medium)] text-sm">
+                        Thanks for reaching out! I'll get back to you soon.
+                    </div>
+                </div>
+
+                <!-- Contact Info & Social -->
+                <div class="space-y-6">
+                    <div class="m3-card">
+                        <h3 class="text-lg font-bold mb-4 text-[var(--md-sys-color-on-surface)]">Direct Contact</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-[var(--md-sys-color-primary-container)] flex items-center justify-center">
+                                    <span
+                                        class="material-symbols-outlined text-[var(--md-sys-color-primary)]">email</span>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-[var(--md-sys-color-on-surface-variant)]">Email</div>
+                                    <div class="font-medium">oleksiibaraiuk@proton.me</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m3-card">
+                        <h3 class="text-lg font-bold mb-4 text-[var(--md-sys-color-on-surface)]">Connect Online</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <a href="https://github.com/OleksiiBaraniuk" target="_blank" class="social-link">
+                                <span class="material-symbols-outlined">code</span>
+                                GitHub
+                            </a>
+                            <a href="https://www.youtube.com/@OleksiiBaraniuk" target="_blank" class="social-link">
+                                <span class="material-symbols-outlined">play_circle</span>
+                                YouTube
+                            </a>
+                            <a href="https://baraniukconnection.itch.io target=" _blank" class="social-link">
+                                <span class="material-symbols-outlined">videogame_asset</span>
+                                Itch.io
+                            </a>
+                            <a href="your-linkedin-url" target="_blank" class="social-link">
+                                <span class="material-symbols-outlined">work</span>
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="m3-card bg-[var(--md-sys-color-primary-container)]">
+                        <h3 class="text-lg font-bold mb-2 text-[var(--md-sys-color-on-primary-container)]">Open to
+                            Opportunities</h3>
+                        <p class="text-sm text-[var(--md-sys-color-on-primary-container)] leading-relaxed">
+                            I'm currently available for collaborations, freelance work, and interesting projects. Let's
+                            create something amazing together!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+        class="bg-[var(--md-sys-color-surface)] border-t border-[var(--md-sys-color-surface-variant)] py-8 px-8 mt-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex gap-8 text-xs font-bold uppercase tracking-widest">
+                    <a class="text-[var(--md-sys-color-on-surface-variant)] hover:text-[var(--md-sys-color-primary)] transition-colors"
+                        href="https://github.com/OleksiiBaraniuk">GitHub</a>
+                    <a class="text-[var(--md-sys-color-on-surface-variant)] hover:text-[var(--md-sys-color-primary)] transition-colors"
+                        href="https://www.youtube.com/@OleksiiBaraniuk">YouTube</a>
+                    <a class="text-[var(--md-sys-color-on-surface-variant)] hover:text-[var(--md-sys-color-primary)] transition-colors"
+                        href="https://baraniukconnection.itch.io">Itch.io</a>
+                    <a class="text-[var(--md-sys-color-on-surface-variant)] hover:text-[var(--md-sys-color-primary)] transition-colors"
+                        href="your-linkedin">LinkedIn</a>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-[10px] font-mono text-[var(--md-sys-color-on-surface-variant)] uppercase">© 2026
+                        Baraniuk. Built with passion.</p>
+                    <p class="text-[10px] font-mono text-[var(--md-sys-color-primary)] mt-1">Made with Technologies and
+                        creativity</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop"
+        class="fixed bottom-8 right-8 bg-[var(--md-sys-color-primary)] text-white w-14 h-14 flex items-center justify-center rounded-2xl hover:scale-105 transition-all shadow-lg opacity-0 pointer-events-none"
+        onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+
+    <script>
+        // Navigation handling
+        document.querySelectorAll('.m3-nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and sections
+                document.querySelectorAll('.m3-nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
+                // Add active class to clicked tab
+                tab.classList.add('active');
+
+                // Show corresponding section
+                const sectionId = tab.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Project filtering
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                // Remove active class from all chips
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+
+                const filter = chip.getAttribute('data-filter');
+                const projects = document.querySelectorAll('.project-card');
+
+                projects.forEach(project => {
+                    if (filter === 'all' || project.getAttribute('data-category') === filter) {
+                        project.classList.remove('hidden');
+                    } else {
+                        project.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Contact form handling
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+
+            // Here you would normally send the data to a backend service
+            // For now, we'll just show a success message
+            console.log('Form submitted:', data);
+
+            // Show success message
+            document.getElementById('formSuccess').classList.remove('hidden');
+            event.target.reset();
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                document.getElementById('formSuccess').classList.add('hidden');
+            }, 5000);
+
+
+        }
+
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.style.opacity = '1';
+                backToTop.style.pointerEvents = 'auto';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.pointerEvents = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
